@@ -3,7 +3,7 @@ from webargs import flaskparser
 from .fields import create_level_model, delete_level_model, edit_level_model
 from service import levels_service
 
-level_router = Blueprint('level', __name__)
+level_router = Blueprint('levels', __name__)
 
 
 @level_router.post('/level/create')
