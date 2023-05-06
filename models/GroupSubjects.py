@@ -11,8 +11,8 @@ class GroupSubjects(BaseModel):
     def get_dto(self):
         return {
             'id': self.id,
-            'group_id': self.group,
-            'subject_id': self.subject,
+            'group': self.group,
+            'subject': self.subject,
         }
 
     class Meta:
