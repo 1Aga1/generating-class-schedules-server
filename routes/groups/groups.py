@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, Response
 from webargs import flaskparser
-from fields import groups_add_model, groups_remove_model, groups_edit_model
+from .fields import groups_add_model, groups_remove_model, groups_edit_model
 from service import groups_service
 
 

@@ -35,6 +35,6 @@ def get_schedules():
 
 
 @schedules_router.get('/schedule/<schedule_id>')
-def get_schedules(schedule_id):
+def get_schedule(schedule_id):
     schedule = schedules_service.get_schedule(schedule_id)
     return jsonify(schedule)

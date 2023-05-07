@@ -5,7 +5,7 @@ from models import Groups, Subjects, Schedules
 
 class ScheduleParams(BaseModel):
     id = AutoField(primary_key=True)
-    schedule = ForeignKeyField(Schedules, on_delete='CASCADE', null=False)
+    schedule = ForeignKeyField(Schedules, backref='schedule_params', on_delete='CASCADE', null=False)
     group = ForeignKeyField(Groups, on_delete='CASCADE', null=False)
     subject = ForeignKeyField(Subjects, on_delete='CASCADE', null=False)
 
