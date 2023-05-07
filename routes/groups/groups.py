@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify, Response
 from webargs import flaskparser
+
+from decorators import login_required
 from .fields import groups_add_model, groups_remove_model, groups_edit_model
 from service import groups_service
 
@@ -8,21 +10,24 @@ groups_router = Blueprint('groups', __name__)
 
 
 @groups_router.post('/group/create')
-def create():
+@login_required
+def create(password):
     data = flaskparser.parser.parse(groups_add_model, request)
     group = groups_service.create(data['level_id'], data['name'])
     return jsonify(group)
 
 
 @groups_router.delete('/group/remove')
-def remove():
+@login_required
+def remove(password):
     data = flaskparser.parser.parse(groups_remove_model, request)
     groups_service.remove(data['group_id'])
     return Response(status=204)
 
 
 @groups_router.post('/group/edit')
-def edit():
+@login_required
+def edit(password):
     data = flaskparser.parser.parse(groups_edit_model, request)
     group = groups_service.edit(data['group_id'], data['level_id'], data['name'])
     return jsonify(group)

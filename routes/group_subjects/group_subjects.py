@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify, Response
 from webargs import flaskparser
+
+from decorators import login_required
 from .fields import group_subjects_add_model, group_subjects_remove_model
 from service import group_subjects_service
 
@@ -8,14 +10,16 @@ group_subjects_router = Blueprint('group_subjects', __name__)
 
 
 @group_subjects_router.post('/group_subject/add')
-def add():
+@login_required
+def add(password):
     data = flaskparser.parser.parse(group_subjects_add_model, request)
     group_subject = group_subjects_service.add(data['group_id'], data['subject_id'])
     return jsonify(group_subject)
 
 
 @group_subjects_router.delete('/group_subject/remove')
-def remove():
+@login_required
+def remove(password):
     data = flaskparser.parser.parse(group_subjects_remove_model, request)
     group_subjects_service.remove(data['group_id'], data['subject_id'])
     return Response(status=204)
