@@ -9,7 +9,7 @@ from service import level_subjects_service
 level_subjects_router = Blueprint('level_subjects', __name__)
 
 
-@level_subjects_router.post('/level_subjects/add')
+@level_subjects_router.post('/level_subject/add')
 @login_required
 def add(user):
     data = flaskparser.parser.parse(level_subjects_add_model, request)
@@ -17,7 +17,7 @@ def add(user):
     return jsonify(level_subjects)
 
 
-@level_subjects_router.delete('/level_subjects/remove')
+@level_subjects_router.delete('/level_subject/remove')
 @login_required
 def remove(user):
     data = flaskparser.parser.parse(level_subjects_remove_model, request)
@@ -25,7 +25,7 @@ def remove(user):
     return Response(status=204)
 
 
-@level_subjects_router.get('/level_subjects/<level_id>')
+@level_subjects_router.get('/level_subject/<level_id>')
 def get_level_subjects(level_id):
     level_subjects = level_subjects_service.get_level_subjects(level_id)
     return jsonify(level_subjects)

@@ -27,7 +27,7 @@ def edit(subject_id: int, name: str, office: str):
 
 
 def get_subjects():
-    return [subject.get_dto() for subject in Subjects.select()]
+    return [subject.get_dto() for subject in Subjects.select().order_by(Subjects.name.asc())]
 
 
 def get_subject(subject_id: int):
