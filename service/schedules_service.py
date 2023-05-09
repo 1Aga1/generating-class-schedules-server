@@ -25,7 +25,7 @@ def edit(schedule_id: int, date: str):
 
 
 def get_schedules():
-    return [schedule.get_dto() for schedule in Schedules.select()]
+    return [schedule.get_dto() for schedule in Schedules.select().order_by(Schedules.date.asc())]
 
 
 def get_schedule(schedule_id: int):

@@ -10,7 +10,7 @@ subjects_router = Blueprint('subjects', __name__)
 
 @subjects_router.post('/subject/create')
 @login_required
-def create(password):
+def create(user):
     data = flaskparser.parser.parse(create_subjects_model, request)
     level = subjects_service.create(data['name'], data['office'])
     return jsonify(level)
@@ -18,7 +18,7 @@ def create(password):
 
 @subjects_router.delete('/subject/remove')
 @login_required
-def remove(password):
+def remove(user):
     data = flaskparser.parser.parse(delete_subjects_model, request)
     subjects_service.delete(data['subject_id'])
     return Response(status=204)
@@ -26,7 +26,7 @@ def remove(password):
 
 @subjects_router.post('/subject/edit')
 @login_required
-def edit(password):
+def edit(user):
     data = flaskparser.parser.parse(edit_subjects_model, request)
     level = subjects_service.edit(data['subject_id'], data['name'], data['office'])
     return jsonify(level)

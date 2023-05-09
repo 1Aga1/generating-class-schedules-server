@@ -1,5 +1,6 @@
 from flask import Response, request, Blueprint, jsonify
 from webargs import flaskparser
+from decorators import login_required
 from service import schedules_service
 from .fields import create_schedule_model, remove_schedule_model, edit_schedule_model
 
@@ -8,21 +9,24 @@ schedules_router = Blueprint('schedules', __name__)
 
 
 @schedules_router.post('/schedule/create')
-def create():
+@login_required
+def create(user):
     data = flaskparser.parser.parse(create_schedule_model, request)
     schedule = schedules_service.create(data['date'])
     return jsonify(schedule)
 
 
 @schedules_router.delete('/schedule/remove')
-def remove():
+@login_required
+def remove(user):
     data = flaskparser.parser.parse(remove_schedule_model, request)
     schedules_service.remove(data['schedule_id'])
     return Response(status=204)
 
 
 @schedules_router.post('/schedule/edit')
-def edit():
+@login_required
+def edit(user):
     data = flaskparser.parser.parse(edit_schedule_model, request)
     schedule = schedules_service.edit(data['schedule_id'], data['date'])
     return jsonify(schedule)
