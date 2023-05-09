@@ -20,7 +20,7 @@ def create(password):
 @login_required
 def remove(password):
     data = flaskparser.parser.parse(delete_subjects_model, request)
-    subjects_service.delete(data['id'])
+    subjects_service.delete(data['subject_id'])
     return Response(status=204)
 
 
@@ -28,7 +28,7 @@ def remove(password):
 @login_required
 def edit(password):
     data = flaskparser.parser.parse(edit_subjects_model, request)
-    level = subjects_service.edit(data['id'], data['name'], data['office'])
+    level = subjects_service.edit(data['subject_id'], data['name'], data['office'])
     return jsonify(level)
 
 

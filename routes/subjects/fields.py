@@ -7,11 +7,11 @@ create_subjects_model = {
 }
 
 delete_subjects_model = {
-    'id': fields.Number(required=True),
+    'subject_id': fields.Number(required=True),
 }
 
 edit_subjects_model = {
-    'id': fields.Number(required=True),
+    'subject_id': fields.Number(required=True),
     'name': fields.String(required=True),
     'office': fields.String(required=True),
 }

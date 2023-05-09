@@ -11,7 +11,7 @@ class Groups(BaseModel):
     def get_dto(self):
         return {
             'id': self.id,
-            'level': self.level,
+            'level': self.level.id,
             'name': self.name,
         }
 

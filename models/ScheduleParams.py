@@ -12,9 +12,9 @@ class ScheduleParams(BaseModel):
     def get_dto(self):
         return {
             'id': self.id,
-            'schedule': self.schedule,
-            'group': self.group,
-            'subject': self.subject,
+            'schedule': self.schedule.id,
+            'group': self.group.id,
+            'subject': self.subject.id,
         }
 
     class Meta:

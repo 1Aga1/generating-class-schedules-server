@@ -7,9 +7,14 @@ class Levels(BaseModel):
     text = TextField()
 
     def get_dto(self):
+        groups = self.groups.select()
+        subjects = self.subjects.select()
+
         return {
             'id': self.id,
             'text': self.text,
+            'groups': [group.get_dto() for group in groups],
+            'subjects': [subject.get_dto() for subject in subjects]
         }
 
     class Meta:

@@ -1,7 +1,7 @@
 from webargs import fields
 
 
-groups_add_model = {
+groups_create_model = {
     'level_id': fields.Number(required=True),
     'name': fields.String(required=True),
 }

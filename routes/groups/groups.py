@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, Response
 from webargs import flaskparser
 
 from decorators import login_required
-from .fields import groups_add_model, groups_remove_model, groups_edit_model
+from .fields import groups_create_model, groups_remove_model, groups_edit_model
 from service import groups_service
 
 
@@ -12,7 +12,7 @@ groups_router = Blueprint('groups', __name__)
 @groups_router.post('/group/create')
 @login_required
 def create(password):
-    data = flaskparser.parser.parse(groups_add_model, request)
+    data = flaskparser.parser.parse(groups_create_model, request)
     group = groups_service.create(data['level_id'], data['name'])
     return jsonify(group)
 
@@ -39,7 +39,7 @@ def get_groups():
     return jsonify(groups)
 
 
-@groups_router.get('/groups/<group_id>')
+@groups_router.get('/group/<group_id>')
 def get_group(group_id):
     group = groups_service.get_group(group_id)
     return jsonify(group)

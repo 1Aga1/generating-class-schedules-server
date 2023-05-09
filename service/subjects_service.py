@@ -23,7 +23,7 @@ def edit(subject_id: int, name: str, office: str):
     subject.office = office
     subject.save()
 
-    return subject
+    return subject.get_dto()
 
 
 def get():

@@ -6,10 +6,10 @@ create_level_model = {
 }
 
 delete_level_model = {
-    'id': fields.Number(required=True),
+    'level_id': fields.Number(required=True),
 }
 
 edit_level_model = {
-    'id': fields.Number(required=True),
+    'level_id': fields.Number(required=True),
     'text': fields.String(required=True),
 }

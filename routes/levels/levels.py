@@ -20,7 +20,7 @@ def create(password):
 @login_required
 def remove(password):
     data = flaskparser.parser.parse(delete_level_model, request)
-    levels_service.delete(data['id'])
+    levels_service.delete(data['level_id'])
     return Response(status=204)
 
 
@@ -28,12 +28,18 @@ def remove(password):
 @login_required
 def edit(password):
     data = flaskparser.parser.parse(edit_level_model, request)
-    level = levels_service.edit(data['id'], data['text'])
+    level = levels_service.edit(data['level_id'], data['text'])
     return jsonify(level)
 
 
 @level_router.get('/levels')
 def get_levels():
-    levels = levels_service.get()
+    levels = levels_service.get_levels()
+    return jsonify(levels)
+
+
+@level_router.get('/level/<level_id>')
+def get_level(level_id):
+    levels = levels_service.get_level(level_id)
     return jsonify(levels)
 
