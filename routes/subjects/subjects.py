@@ -34,6 +34,12 @@ def edit(user):
 
 @subjects_router.get('/subjects')
 def get_subjects():
-    subjects = subjects_service.get()
+    subjects = subjects_service.get_subjects()
     return jsonify(subjects)
+
+
+@subjects_router.get('/subject/<subject_id>')
+def get_subject(subject_id):
+    subject = subjects_service.get_subject(subject_id)
+    return jsonify(subject)
 

@@ -26,5 +26,13 @@ def edit(subject_id: int, name: str, office: str):
     return subject.get_dto()
 
 
-def get():
+def get_subjects():
     return [subject.get_dto() for subject in Subjects.select()]
+
+
+def get_subject(subject_id: int):
+    subject = Subjects.get_or_none(id=subject_id)
+    if not subject:
+        raise ApiError.BadRequest('Subject not found')
+
+    return subject.get_dto()
