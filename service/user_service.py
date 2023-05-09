@@ -5,7 +5,7 @@ from uuid import uuid4
 
 
 def login(username: str, password: str):
-    user = Users.get_or_none()
+    user = Users.get_or_none(username=username)
     if not user or check_password_hash(user.password, password):
         raise ApiError.BadRequest('Wrong username or password')
 

@@ -15,7 +15,7 @@ def login():
     user, session = user_service.login(data['username'], data['password'])
 
     res = make_response(jsonify(user))
-    res.set_cookie('session', session)
+    res.set_cookie('session', session, max_age=60*60*24)
 
     return res
 
