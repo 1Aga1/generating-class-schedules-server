@@ -13,9 +13,9 @@ class ScheduleParams(BaseModel):
     def get_dto(self):
         return {
             'id': self.id,
-            'schedule': self.schedule.id,
-            'group': self.group.id,
-            'subject': self.subject.id,
+            'schedule_id': self.schedule.id,
+            'group_id': self.group.id,
+            'subject_id': self.subject.id,
             'number': self.number
         }
 

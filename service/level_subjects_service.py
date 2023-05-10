@@ -14,5 +14,5 @@ def remove(level_id: int, subject_id: int):
     level_subject.execute()
 
 
-def get_level_subjects(level_id: int):
-    return [level_subject.get_dto() for level_subject in LevelSubjects.select().where(LevelSubjects.level == level_id)]
+def get_levels_subjects():
+    return [levels_subject.get_dto() for levels_subject in LevelSubjects.select()]

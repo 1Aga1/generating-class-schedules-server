@@ -7,12 +7,9 @@ class Schedules(BaseModel):
     date = DateField()
 
     def get_dto(self):
-        params = self.schedule_params.select()
-
         return {
             'id': self.id,
             'date': self.date,
-            'params': [param.get_dto() for param in params]
         }
 
     class Meta:

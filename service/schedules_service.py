@@ -1,4 +1,4 @@
-from models import Schedules
+from models import Schedules, ScheduleParams
 from exceptions import ApiError
 
 
@@ -33,4 +33,7 @@ def get_schedule(schedule_id: int):
     if not schedule:
         raise ApiError.BadRequest('Schedule not found')
 
-    return schedule.get_dto()
+    return {
+        **schedule.get_dto(),
+        'params': [param.get_dto() for param in ScheduleParams.select().where(ScheduleParams.schedule == schedule).order_by(ScheduleParams.number.asc())]
+    }

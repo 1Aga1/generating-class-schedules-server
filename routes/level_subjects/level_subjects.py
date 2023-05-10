@@ -25,7 +25,7 @@ def remove(user):
     return Response(status=204)
 
 
-@level_subjects_router.get('/level_subject/<level_id>')
-def get_level_subjects(level_id):
-    level_subjects = level_subjects_service.get_level_subjects(level_id)
+@level_subjects_router.get('/level_subjects')
+def get_level_subjects():
+    level_subjects = level_subjects_service.get_levels_subjects()
     return jsonify(level_subjects)
