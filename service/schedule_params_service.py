@@ -7,6 +7,9 @@ def add(schedule_id: int, group_id: int, subject_id: int):
     return schedule_param.get_dto()
 
 
-def remove(schedule_param_id: int):
-    schedule_param = ScheduleParams.delete().where(ScheduleParams.id == schedule_param_id)
+def remove(schedule_id: int, group_id: int, subject_id: int):
+    schedule_param = ScheduleParams.delete().where(ScheduleParams.schedule == schedule_id,
+                                                   ScheduleParams.group == group_id,
+                                                   ScheduleParams.subject == subject_id,
+                                                   )
     schedule_param.execute()

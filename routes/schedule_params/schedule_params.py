@@ -20,6 +20,6 @@ def add(user):
 @login_required
 def remove(user):
     data = flaskparser.parser.parse(schedule_param_remove_model, request)
-    schedule_params_service.remove(data['schedule_param_id'])
+    schedule_params_service.remove(data['schedule_id'], data['group_id'], data['subject_id'])
     return Response(status=204)
 

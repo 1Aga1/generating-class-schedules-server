@@ -27,7 +27,7 @@ def edit(group_id: int, level_id: int, name: str):
 
 
 def get_groups():
-    return [group.get_dto() for group in Groups.select()]
+    return [group.get_dto() for group in Groups.select().order_by(Groups.level.asc())]
 
 
 def get_group(group_id: int):

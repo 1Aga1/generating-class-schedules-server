@@ -8,5 +8,5 @@ schedule_param_add_model = {
 }
 
 schedule_param_remove_model = {
-    'schedule_param_id': fields.Number(required=True)
+    **schedule_param_add_model
 }
