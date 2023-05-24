@@ -12,7 +12,7 @@ subjects_router = Blueprint('subjects', __name__)
 @login_required
 def create(user):
     data = flaskparser.parser.parse(create_subjects_model, request)
-    level = subjects_service.create(data['name'], data['office'])
+    level = subjects_service.create(data['name'], data['office'], data['teacher_id'])
     return jsonify(level)
 
 
@@ -28,7 +28,7 @@ def remove(user):
 @login_required
 def edit(user):
     data = flaskparser.parser.parse(edit_subjects_model, request)
-    level = subjects_service.edit(data['subject_id'], data['name'], data['office'])
+    level = subjects_service.edit(data['subject_id'], data['name'], data['office'], data['teacher_id'])
     return jsonify(level)
 
 

@@ -6,6 +6,7 @@ from .schedules import schedules
 from .schedule_params import schedule_params
 from .user import user
 from .document import document
+from .teachers import teachers
 
 routes = [
     levels.level_router,
@@ -15,5 +16,6 @@ routes = [
     schedules.schedules_router,
     schedule_params.schedule_params_router,
     user.user_router,
-    document.document_router
+    document.document_router,
+    teachers.teachers_router
 ]
