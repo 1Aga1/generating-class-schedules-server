@@ -2,6 +2,7 @@ import datetime
 import os
 
 from openpyxl import load_workbook
+from werkzeug import Response
 
 from models import Schedules, ScheduleParams, Levels, LevelSubjects, Groups, Subjects, Teachers
 from exceptions import ApiError
@@ -105,11 +106,13 @@ def upload_schedule(file):
 
                             subject = Subjects.get_or_none(name=subject_data[0], office=subject_data[1])
                             if subject:
-                                level_subject = LevelSubjects(level=level, subject=subject)
-                                level_subject.save()
+                                level_subject = LevelSubjects.get_or_none(level=level, subject=subject)
+                                if not level_subject:
+                                    level_subject = LevelSubjects(level=level, subject=subject)
+                                    level_subject.save()
 
                                 schedule_param = ScheduleParams(schedule=schedule['id'], group=group, subject=subject,
                                                                 number=row-2)
                                 schedule_param.save()
 
-    return 'true'
+    return Response(status=200)

@@ -20,6 +20,6 @@ def login(username: str, password: str):
 def checkout(session: str):
     user = Users.get_or_none(session=session)
     if not user:
-        ApiError.UnauthorizedError()
+        raise ApiError.UnauthorizedError()
 
     return user.get_dto()

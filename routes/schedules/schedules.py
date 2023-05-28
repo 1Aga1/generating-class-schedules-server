@@ -48,4 +48,5 @@ def get_schedule(schedule_id):
 @login_required
 def upload_schedule(user):
     file = request.files['file']
+
     return schedules_service.upload_schedule(file)
