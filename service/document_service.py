@@ -14,7 +14,7 @@ def generate_schedule(schedule_id: int):
         raise ApiError.BadRequest('Schedule not found')
 
     document = Document()
-    document_name = 'Расписание на '+schedule.date.strftime('%d.%m.%Y')
+    document_name = 'Расписание на ' + schedule.date.strftime('%d.%m.%Y')
     head = document.add_heading(document_name, level=2)
     head.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
