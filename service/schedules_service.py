@@ -62,15 +62,15 @@ def upload_schedule(file):
 
             if sheet.cell(row=1, column=column).value:
                 level_text = sheet.cell(row=1, column=column).value
-                level = Levels.get_or_none(text=level_text)
 
+                level = Levels.get_or_none(text=level_text)
                 if not level:
                     level = Levels(text=level_text)
                     level.save()
 
                 group_name = sheet.cell(row=2, column=column).value
-                group = Groups.get_or_none(level=level, name=group_name)
 
+                group = Groups.get_or_none(level=level, name=group_name)
                 if not group:
                     group = Groups(level=level, name=group_name)
                     group.save()
@@ -82,8 +82,8 @@ def upload_schedule(file):
                         subjects = cell_value.split('/')
 
                         for data in subjects:
-                            subject_w_teacher = data.split('!')
 
+                            subject_w_teacher = data.split('!')
                             if len(subject_w_teacher) > 1:
                                 teacher_fullname = subject_w_teacher[1]
 
@@ -93,8 +93,8 @@ def upload_schedule(file):
                                     teacher.save()
 
                                 subject_data = subject_w_teacher[0].split('-')
-
                                 if len(subject_data) > 1:
+
                                     subject = Subjects.get_or_none(name=subject_data[0], office=subject_data[1],
                                                                    teacher=teacher)
                                     if not subject:
@@ -106,6 +106,7 @@ def upload_schedule(file):
 
                             subject = Subjects.get_or_none(name=subject_data[0], office=subject_data[1])
                             if subject:
+
                                 level_subject = LevelSubjects.get_or_none(level=level, subject=subject)
                                 if not level_subject:
                                     level_subject = LevelSubjects(level=level, subject=subject)
