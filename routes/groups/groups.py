@@ -12,7 +12,7 @@ groups_router = Blueprint('groups', __name__)
 @login_required
 def create(user):
     data = flaskparser.parser.parse(groups_create_model, request)
-    group = groups_service.create(data['name'])
+    group = groups_service.create(data['name'], data['course'])
     return jsonify(group)
 
 
@@ -28,7 +28,7 @@ def remove(user):
 @login_required
 def edit(user):
     data = flaskparser.parser.parse(groups_edit_model, request)
-    group = groups_service.edit(data['group_id'], data['name'])
+    group = groups_service.edit(data['group_id'], data['name'], data['course'])
     return jsonify(group)
 
 

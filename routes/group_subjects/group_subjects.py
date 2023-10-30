@@ -26,6 +26,6 @@ def remove(user):
 
 
 @group_subjects_router.get('/group_subjects')
-def get_level_subjects():
+def get_group_subjects():
     group_subjects = group_subjects_service.get_groups_subjects()
     return jsonify(group_subjects)

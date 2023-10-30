@@ -15,6 +15,7 @@ class GroupSubjects(BaseModel):
             'subject': {
                 'id': self.subject.id,
                 'name': self.subject.name,
+                'teacher': self.subject.teacher.fullname
             },
         }
 
