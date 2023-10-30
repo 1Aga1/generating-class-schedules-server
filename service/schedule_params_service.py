@@ -15,6 +15,12 @@ def add(schedule_id: int, group_id: int, subject_id: int, number: int):
     if not subject:
         raise ApiError.BadRequest('Subject not found')
 
+    schedule_param = ScheduleParams.select(ScheduleParams).join(Subjects)\
+        .where(ScheduleParams.schedule == schedule_id, Subjects.office == subject.office,
+               ScheduleParams.number == number)
+    if schedule_param:
+        raise ApiError.BadRequest('Office already set to another group')
+
     schedule_param = ScheduleParams(schedule=schedule_id, group=group_id, subject=subject_id, number=number)
     schedule_param.save()
     return schedule_param.get_dto()
