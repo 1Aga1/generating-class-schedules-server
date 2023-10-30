@@ -1,21 +1,18 @@
-from peewee import AutoField, TextField, ForeignKeyField
+from peewee import AutoField, TextField
 from database import BaseModel
-from models import Levels
 
 
 class Groups(BaseModel):
     id = AutoField(primary_key=True)
-    level = ForeignKeyField(Levels, backref='groups', on_delete='CASCADE', null=False)
     name = TextField()
 
     def get_dto(self):
+        subjects = self.subjects.select()
+
         return {
             'id': self.id,
-            'level': {
-                'id': self.level.id,
-                'text': self.level.text
-            },
             'name': self.name,
+            'subjects': [subject.get_dto() for subject in subjects],
         }
 
     class Meta:

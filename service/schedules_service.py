@@ -4,7 +4,7 @@ import os
 from openpyxl import load_workbook
 from werkzeug import Response
 
-from models import Schedules, ScheduleParams, Levels, LevelSubjects, Groups, Subjects, Teachers
+from models import Schedules, ScheduleParams, GroupSubjects, Groups, Subjects, Teachers
 from exceptions import ApiError
 
 

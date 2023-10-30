@@ -6,7 +6,7 @@ from models import Teachers
 class Subjects(BaseModel):
     id = AutoField(primary_key=True)
     name = TextField()
-    teacher = ForeignKeyField(Teachers, null=False)
+    teacher = ForeignKeyField(Teachers, on_delete="SET NULL", null=True)
 
     def get_dto(self):
         return {

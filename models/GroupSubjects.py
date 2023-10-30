@@ -1,17 +1,17 @@
 from peewee import AutoField, ForeignKeyField
 from database import BaseModel
-from models import Subjects, Levels
+from models import Subjects, Groups
 
 
-class LevelSubjects(BaseModel):
+class GroupSubjects(BaseModel):
     id = AutoField(primary_key=True)
-    level = ForeignKeyField(Levels, backref='subjects', on_delete='CASCADE', null=False)
+    group = ForeignKeyField(Groups, backref='subjects', on_delete='CASCADE', null=False)
     subject = ForeignKeyField(Subjects, on_delete='CASCADE', null=False)
 
     def get_dto(self):
         return {
             'id': self.id,
-            'level': self.level.id,
+            'group_id': self.group.id,
             'subject': {
                 'id': self.subject.id,
                 'name': self.subject.name,
@@ -19,4 +19,4 @@ class LevelSubjects(BaseModel):
         }
 
     class Meta:
-        db_table = 'level_subjects'
+        db_table = 'group_subjects'

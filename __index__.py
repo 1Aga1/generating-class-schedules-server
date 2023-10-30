@@ -4,7 +4,7 @@ from flask import Flask
 from flask_cors import CORS
 from exceptions import ApiError
 from routes import routes
-from models import Groups, LevelSubjects, Levels, Subjects, Schedules, ScheduleParams, Users, Teachers
+from models import Groups, GroupSubjects, Subjects, Schedules, ScheduleParams, Users, Teachers
 
 import os
 
@@ -39,6 +39,6 @@ def after_request(response):
 if __name__ == '__main__':
     os.chdir(Path(__file__).parent)
     with db:
-        db.create_tables([Levels, Subjects, Groups, LevelSubjects, Schedules, ScheduleParams, Users, Teachers])
+        db.create_tables([GroupSubjects, Subjects, Groups, Schedules, ScheduleParams, Users, Teachers])
 
     app.run(debug=os.environ.get('DEBUG') or False, port=os.environ.get('PORT'))
