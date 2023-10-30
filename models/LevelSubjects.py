@@ -15,7 +15,6 @@ class LevelSubjects(BaseModel):
             'subject': {
                 'id': self.subject.id,
                 'name': self.subject.name,
-                'office': self.subject.office,
             },
         }
 

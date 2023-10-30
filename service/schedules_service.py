@@ -95,16 +95,16 @@ def upload_schedule(file):
                                 subject_data = subject_w_teacher[0].split('-')
                                 if len(subject_data) > 1:
 
-                                    subject = Subjects.get_or_none(name=subject_data[0], office=subject_data[1],
+                                    subject = Subjects.get_or_none(name=subject_data[0],
                                                                    teacher=teacher)
                                     if not subject:
-                                        subject = Subjects(name=subject_data[0], office=subject_data[1],
+                                        subject = Subjects(name=subject_data[0],
                                                            teacher=teacher)
                                         subject.save()
 
                             subject_data = subject_w_teacher[0].split('-')
 
-                            subject = Subjects.get_or_none(name=subject_data[0], office=subject_data[1])
+                            subject = Subjects.get_or_none(name=subject_data[0])
                             if subject:
 
                                 level_subject = LevelSubjects.get_or_none(level=level, subject=subject)
