@@ -9,6 +9,7 @@ class ScheduleParams(BaseModel):
     group = ForeignKeyField(Groups, on_delete='CASCADE', null=False)
     subject = ForeignKeyField(Subjects, on_delete='CASCADE', null=False)
     number = IntegerField(null=False)
+    office = IntegerField(null=True)
 
     def get_dto(self):
         return {
@@ -16,7 +17,8 @@ class ScheduleParams(BaseModel):
             'schedule_id': self.schedule.id,
             'group_id': self.group.id,
             'subject_id': self.subject.id,
-            'number': self.number
+            'number': self.number,
+            'office': self.office,
         }
 
     class Meta:

@@ -2,7 +2,7 @@ from models import ScheduleParams, Subjects, Schedules, Groups
 from exceptions import ApiError
 
 
-def add(schedule_id: int, group_id: int, subject_id: int, number: int):
+def add(schedule_id: int, group_id: int, subject_id: int, number: int, office: str):
     schedule = Schedules.get_or_none(id=schedule_id)
     if not schedule:
         raise ApiError.BadRequest('Schedule not found')
@@ -15,7 +15,7 @@ def add(schedule_id: int, group_id: int, subject_id: int, number: int):
     if not subject:
         raise ApiError.BadRequest('Subject not found')
 
-    schedule_param = ScheduleParams(schedule=schedule_id, group=group_id, subject=subject_id, number=number)
+    schedule_param = ScheduleParams(schedule=schedule_id, group=group_id, subject=subject_id, number=number, office=int(office))
     schedule_param.save()
     return schedule_param.get_dto()
 
