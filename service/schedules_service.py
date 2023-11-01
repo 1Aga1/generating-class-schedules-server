@@ -61,59 +61,44 @@ def upload_schedule(file):
         for column in range(1, sheet.max_column + 1):
 
             if sheet.cell(row=1, column=column).value:
-                level_text = sheet.cell(row=1, column=column).value
+                group_name = sheet.cell(row=1, column=column).value
 
-                level = Levels.get_or_none(text=level_text)
-                if not level:
-                    level = Levels(text=level_text)
-                    level.save()
-
-                group_name = sheet.cell(row=2, column=column).value
-
-                group = Groups.get_or_none(level=level, name=group_name)
+                group = Groups.get_or_none(course=int(group_name[0]), name=group_name)
                 if not group:
-                    group = Groups(level=level, name=group_name)
+                    group = Groups(course=int(group_name[0]), name=group_name)
                     group.save()
 
-                for row in range(3, sheet.max_row+1):
+                for row in range(2, sheet.max_row+1):
                     cell_value = sheet.cell(row=row, column=column).value
 
                     if cell_value:
                         subjects = cell_value.split('/')
 
                         for data in subjects:
-
-                            subject_w_teacher = data.split('!')
-                            if len(subject_w_teacher) > 1:
-                                teacher_fullname = subject_w_teacher[1]
+                            subject_w_teacher_w_office = data.split('-')
+                            if subject_w_teacher_w_office[0] and subject_w_teacher_w_office[1] \
+                                    and subject_w_teacher_w_office[2]:
+                                teacher_fullname = subject_w_teacher_w_office[1]
 
                                 teacher = Teachers.get_or_none(fullname=teacher_fullname)
                                 if not teacher:
                                     teacher = Teachers(fullname=teacher_fullname)
                                     teacher.save()
 
-                                subject_data = subject_w_teacher[0].split('-')
-                                if len(subject_data) > 1:
+                                subject = Subjects.get_or_none(name=subject_w_teacher_w_office[0],
+                                                               teacher=teacher)
+                                if not subject:
+                                    subject = Subjects(name=subject_w_teacher_w_office[0],
+                                                       teacher=teacher)
+                                    subject.save()
 
-                                    subject = Subjects.get_or_none(name=subject_data[0],
-                                                                   teacher=teacher)
-                                    if not subject:
-                                        subject = Subjects(name=subject_data[0],
-                                                           teacher=teacher)
-                                        subject.save()
-
-                            subject_data = subject_w_teacher[0].split('-')
-
-                            subject = Subjects.get_or_none(name=subject_data[0])
-                            if subject:
-
-                                level_subject = LevelSubjects.get_or_none(level=level, subject=subject)
-                                if not level_subject:
-                                    level_subject = LevelSubjects(level=level, subject=subject)
-                                    level_subject.save()
+                                group_subject = GroupSubjects.get_or_none(group=group, subject=subject)
+                                if not group_subject:
+                                    group_subject = GroupSubjects(group=group, subject=subject)
+                                    group_subject.save()
 
                                 schedule_param = ScheduleParams(schedule=schedule['id'], group=group, subject=subject,
-                                                                number=row-2)
+                                                                number=row-1, office=subject_w_teacher_w_office[2])
                                 schedule_param.save()
 
     return Response(status=200)
