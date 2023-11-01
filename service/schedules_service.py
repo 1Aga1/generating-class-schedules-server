@@ -102,3 +102,14 @@ def upload_schedule(file):
                                 schedule_param.save()
 
     return Response(status=200)
+
+
+def change_visibility(schedule_id: int, visible: bool):
+    schedule = Schedules.get_or_none(Schedules.id == schedule_id)
+    if not schedule:
+        raise ApiError.BadRequest('Schedule not found')
+
+    schedule.visible = visible
+    schedule.save()
+
+    return schedule.get_dto()

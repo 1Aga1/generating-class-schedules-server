@@ -2,7 +2,7 @@ from flask import Response, request, Blueprint, jsonify
 from webargs import flaskparser
 from decorators import login_required
 from service import schedules_service
-from .fields import create_schedule_model, remove_schedule_model, edit_schedule_model
+from .fields import create_schedule_model, remove_schedule_model, edit_schedule_model, change_visibility_model
 
 
 schedules_router = Blueprint('schedules', __name__)
@@ -50,3 +50,10 @@ def upload_schedule(user):
     file = request.files['file']
 
     return schedules_service.upload_schedule(file)
+
+@schedules_router.post('/schedule/change_visibility')
+@login_required
+def change_visibility(user):
+    data = flaskparser.parser.parse(change_visibility_model, request)
+    schedule = schedules_service.change_visibility(data['schedule_id'], data['visible'])
+    return jsonify(schedule)
