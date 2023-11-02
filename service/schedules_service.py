@@ -113,3 +113,84 @@ def change_visibility(schedule_id: int, visible: bool):
     schedule.save()
 
     return schedule.get_dto()
+
+
+def urtk_schedules():
+    weekdays_en_ru = {
+        'Monday': 'Понедельник',
+        'Tuesday': 'Вторник',
+        'Wednesday': 'Среда',
+        'Thursday': 'Четверг',
+        'Friday': 'Пятница',
+        'Saturday': 'Суббота',
+        'Sunday': 'Воскресенье',
+    }
+
+    urtk_schedules = {
+        'lessonNumber': 6,
+        'courses': []
+    }
+
+    # {
+    #     'name': '1',
+    #     'groups': [
+    #         {
+    #             'name': '1АС1',
+    #             'schedule': [
+    #                 {
+    #                     'date': '02.11.2023',
+    #                     'day': 'Четверг',
+    #                     'lessons': [
+    #                         {'lessonName': 'ОУППП\nЛихачева Е.Г.', 'office': '24'},
+    #                     ]
+    #                 }
+    #             ]
+    #         }
+    #     ]
+    # }
+
+    schedules = Schedules.select().where(Schedules.visible == True).order_by(Schedules.date.asc())
+
+    for course in range(1, 5):
+        course_obj = {
+            'name': course,
+            'groups': []
+        }
+
+        groups = Groups.select().where(Groups.course == course)
+
+        for group in groups:
+            group_obj = {
+                'name': group.name,
+                'schedule': []
+            }
+
+            for schedule in schedules:
+                schedule_params = ScheduleParams.select().where(ScheduleParams.schedule == schedule and
+                                                               ScheduleParams.group == group)\
+                                .order_by(ScheduleParams.number.asc())
+
+                day = {
+                    'date': schedule.date.strftime("%d.%m.%Y"),
+                    'day': weekdays_en_ru[schedule.date.strftime("%A")],
+                    'lessons': []
+                }
+
+                for index, param in enumerate(schedule_params):
+                    subject = Subjects.get_or_none(Subjects.id == param.subject).get_dto()
+                    if index > 0 and param.number == schedule_params[index].number:
+                        day['lessons'][param.number-1]['lessonName'] += f'\n{subject["name"]} {subject["teacher"]["fullname"]}'
+                        day['lessons'][param.number - 1]['office'] += f'/{param.office}'
+                    else:
+                        day['lessons'].append({
+                            'lessonName': f'{subject["name"]} {subject["teacher"]["fullname"]}',
+                            'office': f'{param.office}'
+                        })
+
+                group_obj['schedule'].append(day)
+
+            course_obj['groups'].append(group_obj)
+
+        urtk_schedules['courses'].append(course_obj)
+
+    return urtk_schedules

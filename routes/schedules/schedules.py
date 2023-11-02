@@ -57,3 +57,9 @@ def change_visibility(user):
     data = flaskparser.parser.parse(change_visibility_model, request)
     schedule = schedules_service.change_visibility(data['schedule_id'], data['visible'])
     return jsonify(schedule)
+
+@schedules_router.get('/schedules/urtk')
+@login_required
+def urtk_schedules(user):
+    schedules = schedules_service.urtk_schedules()
+    return jsonify(schedules)
