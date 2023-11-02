@@ -59,7 +59,6 @@ def change_visibility(user):
     return jsonify(schedule)
 
 @schedules_router.get('/schedules/urtk')
-@login_required
 def urtk_schedules(user):
     schedules = schedules_service.urtk_schedules()
     return jsonify(schedules)
