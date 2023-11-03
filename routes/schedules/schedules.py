@@ -62,3 +62,10 @@ def change_visibility(user):
 def urtk_schedules():
     schedules = schedules_service.urtk_schedules()
     return jsonify(schedules)
+
+
+@schedules_router.get('/schedules/urtk/download')
+@login_required
+def urtk_schedules_download(user, schedule_id):
+    file_stream, document_name = schedules_service.urtk_schedules_download()
+    return send_file(file_stream, as_attachment=True, download_name=document_name)

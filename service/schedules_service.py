@@ -1,5 +1,7 @@
 import datetime
+import io
 import os
+import xlsxwriter
 
 from openpyxl import load_workbook
 from werkzeug import Response
@@ -131,25 +133,13 @@ def urtk_schedules():
         'courses': []
     }
 
-    # {
-    #     'name': '1',
-    #     'groups': [
-    #         {
-    #             'name': '1АС1',
-    #             'schedule': [
-    #                 {
-    #                     'date': '02.11.2023',
-    #                     'day': 'Четверг',
-    #                     'lessons': [
-    #                         {'lessonName': 'ОУППП\nЛихачева Е.Г.', 'office': '24'},
-    #                     ]
-    #                 }
-    #             ]
-    #         }
-    #     ]
-    # }
-
     schedules = Schedules.select().where(Schedules.visible == True).order_by(Schedules.date.asc())
+
+    urtk_schedules = {
+        'dates': [schedule.date.strftime("%d.%m.%Y") for schedule in schedules],
+        'lessonNumber': 6,
+        'courses': []
+    }
 
     for course in range(1, 5):
         course_obj = {
@@ -194,3 +184,39 @@ def urtk_schedules():
         urtk_schedules['courses'].append(course_obj)
 
     return urtk_schedules
+
+
+def urtk_schedules_download():
+    document_name = 'Расписание.xlsx'
+    workbook = xlsxwriter.Workbook(document_name)
+
+    urtk_schedule = urtk_schedules()
+
+    with workbook:
+        default_cell_format = workbook.add_format()
+        default_cell_format.set_align('center')
+        default_cell_format.set_align('vcenter')
+        default_cell_format.set_text_wrap()
+        default_cell_format.set_border()
+
+        bold_format = workbook.add_format()
+        bold_format.set_bold()
+        for course in urtk_schedule['courses']:
+            worksheet = workbook.add_worksheet(f'{course["name"]} курс')
+            worksheet.merge_range(0, 0, 0, len(urtk_schedule['courses'])*3+1,
+                                  f'Расписание занятий групп {course["name"]} курса на '
+                                  f'{urtk_schedule["dates"][0]} - {urtk_schedule["dates"][len(urtk_schedule["dates"])]} '
+                                  f'{urtk_schedule["dates"][0].split(".")[2]} года')
+            row = 1
+            col = 1
+            for group in course['groups']:
+                pass
+
+
+    file_stream = io.BytesIO()
+    workbook.save(file_stream)
+    file_stream.seek(0)
+
+    return file_stream, document_name
+
+# https://xlsxwriter.readthedocs.io/worksheet.html
