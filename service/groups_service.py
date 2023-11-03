@@ -36,3 +36,26 @@ def get_group(group_id: int):
         raise ApiError.BadRequest('Group not found')
 
     return group.get_dto()
+
+
+def get_urtk_groups():
+    courses = []
+    for course in range(1, 5):
+        course_obj = {
+            'name': course,
+            'groups': []
+        }
+
+        groups = Groups.select().where(Groups.course == course)
+
+        for group in groups:
+            group_obj = {
+                'id': group.id,
+                'name': group.name,
+            }
+
+            course_obj['groups'].append(group_obj)
+
+        courses.append(course_obj)
+
+    return courses

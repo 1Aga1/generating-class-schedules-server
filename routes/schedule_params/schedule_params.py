@@ -12,8 +12,8 @@ schedule_params_router = Blueprint('schedule_params', __name__)
 @login_required
 def add(user):
     data = flaskparser.parser.parse(schedule_param_add_model, request)
-    schedule_param = schedule_params_service.add(data['schedule_id'], data['group_id'], data['subject_id'],
-                                                 data['number'], data['office'])
+    schedule_param = schedule_params_service.add(data['schedule_id'], data['group_id'], data['sub_group'], data['subject_id'],
+                                                 data['first_half'], data['number'], data['office'])
     return jsonify(schedule_param)
 
 

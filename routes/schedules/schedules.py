@@ -1,4 +1,4 @@
-from flask import Response, request, Blueprint, jsonify
+from flask import Response, request, Blueprint, jsonify, send_file
 from webargs import flaskparser
 from decorators import login_required
 from service import schedules_service
@@ -58,14 +58,15 @@ def change_visibility(user):
     schedule = schedules_service.change_visibility(data['schedule_id'], data['visible'])
     return jsonify(schedule)
 
-@schedules_router.get('/schedules/urtk')
-def urtk_schedules():
-    schedules = schedules_service.urtk_schedules()
-    return jsonify(schedules)
-
 
 @schedules_router.get('/schedules/urtk/download')
 @login_required
-def urtk_schedules_download(user, schedule_id):
+def urtk_schedules_download(user):
     file_stream, document_name = schedules_service.urtk_schedules_download()
     return send_file(file_stream, as_attachment=True, download_name=document_name)
+
+
+@schedules_router.get('/schedules/group/<group_id>')
+def get_group_schedule(group_id):
+    schedule = schedules_service.get_group_schedule(group_id)
+    return jsonify(schedule)

@@ -42,3 +42,9 @@ def get_groups():
 def get_group(group_id):
     group = groups_service.get_group(group_id)
     return jsonify(group)
+
+
+@groups_router.get('/groups/urtk')
+def get_urtk_groups():
+    groups = groups_service.get_urtk_groups()
+    return jsonify(groups)
