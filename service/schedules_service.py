@@ -221,12 +221,14 @@ def urtk_schedules_download():
         default_cell_format.set_align('vcenter')
         default_cell_format.set_text_wrap()
         default_cell_format.set_border()
+        default_cell_format.set_font_size(8)
 
         bold_format = workbook.add_format()
         bold_format.set_align('center')
         bold_format.set_align('vcenter')
         bold_format.set_text_wrap()
         bold_format.set_bold()
+        bold_format.set_font_size(12)
 
         bold_border_format = workbook.add_format()
         bold_border_format.set_align('center')
@@ -234,6 +236,7 @@ def urtk_schedules_download():
         bold_border_format.set_text_wrap()
         bold_border_format.set_bold()
         bold_border_format.set_border()
+        bold_border_format.set_font_size(12)
 
         date_format = workbook.add_format()
         date_format.set_align('center')
@@ -242,6 +245,7 @@ def urtk_schedules_download():
         date_format.set_bold()
         date_format.set_border()
         date_format.set_rotation(90)
+        date_format.set_font_size(12)
 
         for course in urtk_schedule['courses']:
             worksheet = workbook.add_worksheet(f'{course["name"]} курс')
@@ -256,6 +260,7 @@ def urtk_schedules_download():
             row = 2
             for date in urtk_schedule["dates"]:
                 worksheet.merge_range(row, 0, row+5, 0, date, date_format)
+                worksheet.set_column(0, 0, 4.57)
                 row += 6
 
             group_col = 1
@@ -269,15 +274,15 @@ def urtk_schedules_download():
                 for day in group['schedule']:
                     for lesson in day['lessons']:
                         worksheet.write(row, group_col, lesson['time'], default_cell_format)
-                        worksheet.set_column(group_col, group_col, 6.5)
+                        worksheet.set_column(group_col, group_col, 6.43)
 
                         worksheet.write(row, group_col+1, lesson['name'], default_cell_format)
-                        worksheet.set_column(group_col+1, group_col+1, 36)
+                        worksheet.set_column(group_col+1, group_col+1, 20.57)
 
                         worksheet.write(row, group_col+2, lesson['office'], default_cell_format)
-                        worksheet.set_column(group_col+2, group_col+2, 7.6)
+                        worksheet.set_column(group_col+2, group_col+2, 4.29)
 
-                        worksheet.set_row(row, 40)
+                        worksheet.set_row(row, 21.75)
 
                         row += 1
 
